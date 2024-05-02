@@ -20,7 +20,8 @@ class MinMax():
         return 0
     
     #player is either X or O
-    def next_states(self, state, player):
+    def next_states(self, state):
+        player = self.player(state)
         states = []
         for i in range(3):
             for u in range(3):
@@ -67,3 +68,17 @@ class MinMax():
         for state in self.next_states(state):
             v = min(v, self.max_value(state))
         return v
+    
+    def player(self, state):
+        #count X's
+        Xs = sum([x.count("X") for x in state])
+        Os = sum([x.count("O") for x in state])
+        calc = Xs - Os
+        return "X" if calc == 0 else "O"
+    
+    def figure_out_move(self, previous_state, current_state):
+        for i in range(3):
+            for u in range(3):
+                if previous_state[i][u] != current_state[i][u]:
+                    return (i, u)
+        
