@@ -2,21 +2,55 @@ from game import Game
 from minmax import MinMax
 import numpy as np
 import random
-
+from Node import Node
+from MCTS import MCTS
 game = Game()
 minmax = MinMax()
 
 turn = "X"
 
-state1 = [["_", "_", "_"],
-        ["_", "_", "_"],
-        ["_", "_", "_"]]
+#game loop for playing MCTS
+while True:
+    row = None
+    column = None
+    played = False
+    game.print_game_state()
+    print(f"Player {turn} plays")
+    if turn == "X":
+        while not played:
+            row = None
+            column = None
+            while row == None:
+                row = input("Row:")
+                if row not in ["0", "1", "2"]:
+                    row = None
+                    print("Pick 0, 1 or 2")
+            while column == None:
+                column = input("column:")
+                if column not in ["0", "1", "2"]:
+                    column1 = None
+                    print("Pick 0, 1 or 2")
+            played = game.play_move(turn, int(row), int(column))
+    else:
+        root = Node(0, 0, game.game_state)
+        mcts = MCTS(root)
+        mcts.calculate_move_tree()
+        move = mcts.get_move()
+        row = move[0]
+        column = move[1]
+        game.play_move(turn, int(row), int(column))
+    check = game.check_winner()
+    if check[0]:
+        game.print_game_state()
+        if check[1] == 1:
+            print("X wins!")
+        elif check[1] == -1:
+            print("O wins!")
+        else:
+            print("Draw")
+        break
+    turn = "O" if turn == "X" else "X"
 
-state2 = [["X", "_", "_"],
-        ["_", "_", "_"],
-        ["_", "_", "_"]]
-
-print(minmax.next_states(state1))
 """
 while True:
     row = None

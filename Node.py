@@ -22,3 +22,26 @@ class Node:
     
     def update_value(self, value):
         self.v += value
+        self.n += 1
+    
+    def has_parent(self):
+        return self.parent != None
+    
+    def has_children(self):
+        return self.children != []
+    
+    def get_parent(self):
+        return self.parent
+    
+    def display(self):
+        print(self.state, self.v, self.n)
+    
+    def get_state(self):
+        return self.state
+
+    def get_v(self):
+        return self.v
+    
+    def get_n(self):
+        return self.n
+    
