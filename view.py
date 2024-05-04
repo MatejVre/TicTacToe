@@ -22,7 +22,7 @@ class App(customtkinter.CTk):
         #create grid
         self.create_grid()
         
-
+#testing contributions
     def create_grid(self):
         for i in range(3):
             for u in range(3):
